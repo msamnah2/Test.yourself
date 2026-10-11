@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اختبري نفسك</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;800&display=swap" rel="stylesheet">
+<style>
+:root{--grass:#5d9c3a;--dirt:#7a5230;--dirt2:#5e3d22;--stone:#8b8b8b;--ink:#1c1c1c;--gold:#f5c542;--red:#d8392f;--green:#3fbf4a;--panel:#c6c6c6;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;min-height:100vh;font-family:'Tajawal',Tahoma,Arial,sans-serif;color:#fff;
+background:linear-gradient(#6fb7ff 0,#9ad0ff 120px,var(--grass) 120px,var(--grass) 144px,var(--dirt) 144px);
+background-attachment:fixed}
+body:before{content:"";position:fixed;inset:144px 0 0;background:
+repeating-linear-gradient(90deg,rgba(0,0,0,.12) 0 4px,transparent 4px 48px),
+repeating-linear-gradient(0deg,rgba(0,0,0,.12) 0 4px,transparent 4px 48px);pointer-events:none}
+.wrap{position:relative;max-width:640px;margin:0 auto;padding:16px 14px 40px}
+h1{margin:6px 0 14px;text-align:center;font-size:2.2rem;color:#fff;text-shadow:3px 3px 0 #333,-1px -1px 0 #333;letter-spacing:1px}
+.card{background:var(--panel);color:var(--ink);border:4px solid #000;box-shadow:inset 4px 4px 0 #fff,inset -4px -4px 0 #707070,6px 6px 0 rgba(0,0,0,.4);padding:16px}
+.hud{display:flex;justify-content:space-between;gap:8px;margin-bottom:10px;font-weight:800}
+.chip{background:#333;color:#fff;border:3px solid #000;padding:4px 10px;box-shadow:inset 2px 2px 0 #666}
+.chip b{color:var(--gold)}
+.xp{height:18px;background:#333;border:3px solid #000;margin-bottom:12px}
+.xp i{display:block;height:100%;width:0;background:var(--green);box-shadow:inset 0 4px 0 rgba(255,255,255,.35);transition:width .3s}
+.sec{font-size:.9rem;color:#555;font-weight:800;margin-bottom:6px}
+.q{font-size:1.2rem;font-weight:800;line-height:1.7;margin:0 0 12px}
+.opt{display:block;width:100%;margin:0 0 10px;padding:12px;font:inherit;font-weight:800;font-size:1.05rem;color:#fff;text-align:center;cursor:pointer;
+background:var(--stone);border:4px solid #000;box-shadow:inset 4px 4px 0 #bdbdbd,inset -4px -4px 0 #555;text-shadow:2px 2px 0 #333}
+.opt:hover:not(:disabled){background:#7d8cc4;box-shadow:inset 4px 4px 0 #a9b6ee,inset -4px -4px 0 #4b588f}
+.opt:disabled{cursor:default}
+.opt.ok{background:var(--green);box-shadow:inset 4px 4px 0 #8af08f,inset -4px -4px 0 #1d7a25}
+.opt.no{background:var(--red);box-shadow:inset 4px 4px 0 #ff8a80,inset -4px -4px 0 #8a1c15}
+.fb{min-height:30px;font-weight:800;margin:4px 0 8px;text-align:center}
+.btn{display:block;margin:10px auto 0;padding:12px 28px;font:inherit;font-weight:800;font-size:1.1rem;color:#fff;cursor:pointer;
+background:var(--green);border:4px solid #000;box-shadow:inset 4px 4px 0 #8af08f,inset -4px -4px 0 #1d7a25;text-shadow:2px 2px 0 #1d4d22}
+.center{text-align:center}
+.shake{animation:sh .35s}
+@keyframes sh{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.pop{animation:pp .35s}
+@keyframes pp{50%{transform:scale(1.04)}}
+.big{font-size:3rem;margin:4px 0}
+.msg{padding:12px;border:4px solid #000;font-weight:800;line-height:1.8;margin:12px 0;color:#fff}
+.msg.bad{background:var(--red)}.msg.good{background:var(--green)}
+.hide{display:none}
+h1{animation:tt 1.6s ease-in-out infinite alternate}
+@keyframes tt{from{transform:translateY(0) rotate(-1.5deg) scale(1)}to{transform:translateY(-6px) rotate(1.5deg) scale(1.05)}}
+.hero{animation:bob .8s ease-in-out infinite}
+.hero rect{transform-box:fill-box;transform-origin:50% 0}
+@keyframes bob{50%{transform:translateY(-6px)}}
+.armR{animation:wave .5s ease-in-out infinite alternate}
+@keyframes wave{from{transform:rotate(-135deg)}to{transform:rotate(-170deg)}}
+.armL{animation:swL .8s ease-in-out infinite alternate}
+@keyframes swL{from{transform:rotate(20deg)}to{transform:rotate(-20deg)}}
+.legL{animation:swL .8s ease-in-out infinite alternate-reverse}
+.legR{animation:swL .8s ease-in-out infinite alternate}
+@media (prefers-reduced-motion:reduce){.hero,.hero rect,h1{animation:none}}
+@media (prefers-reduced-motion:reduce){.shake,.pop{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>⛏️ اختبري نفسك</h1>
+
+<div id="start" class="card center">
+<svg class="hero" width="96" height="128" viewBox="0 0 12 16" shape-rendering="crispEdges" role="img" aria-label="شخصية اللعبة"><rect x="3" y="0" width="6" height="6" fill="#e8b48a"/><rect x="3" y="0" width="6" height="2" fill="#4a2c17"/><rect x="3" y="2" width="1" height="4" fill="#4a2c17"/><rect x="8" y="2" width="1" height="4" fill="#4a2c17"/><rect x="4" y="3" width="1" height="1" fill="#3b4cc0"/><rect x="5" y="3" width="1" height="1" fill="#fff"/><rect x="6" y="3" width="1" height="1" fill="#fff"/><rect x="7" y="3" width="1" height="1" fill="#3b4cc0"/><rect x="5" y="5" width="2" height="1" fill="#a0522d"/><rect x="3" y="6" width="6" height="5" fill="#1fb5b0"/><rect class="armL" x="1" y="6" width="2" height="5" fill="#e8b48a"/><rect class="armR" x="9" y="6" width="2" height="5" fill="#e8b48a"/><rect class="armL" x="1" y="6" width="2" height="2" fill="#1fb5b0"/><rect class="armR" x="9" y="6" width="2" height="2" fill="#1fb5b0"/><rect class="legL" x="3" y="11" width="3" height="5" fill="#3b3f9e"/><rect class="legR" x="6" y="11" width="3" height="5" fill="#3b3f9e"/><rect x="3" y="15" width="6" height="1" fill="#555"/></svg>
+<p class="q">مرحبًا بكِ في مغامرة التقنية الرقمية 1!<br>أجيبي عن الأسئلة واجمعي الزمرد 💎</p>
+<p class="q">إعداد المعلمة / آمنة السالم</p>
+<button class="btn" id="go">ابدئي اللعب</button>
+</div>
+
+<div id="game" class="hide">
+<div class="hud"><span class="chip">💎 النقاط: <b id="sc">0</b></span><span class="chip" id="cnt"></span></div>
+<div class="xp"><i id="bar"></i></div>
+<div class="card" id="card">
+<div class="sec" id="sec"></div>
+<p class="q" id="q"></p>
+<div id="opts"></div>
+<div class="fb" id="fb"></div>
+<button class="btn hide" id="next">التالي ➡️</button>
+</div>
+</div>
+
+<div id="end" class="card center hide">
+<div class="big" id="ei"></div>
+<p class="q" id="et"></p>
+<p class="q">نقاطكِ: <b id="es"></b></p>
+<div class="msg" id="em"></div>
+<button class="btn" id="again">العبي مرة أخرى 🔄</button>
+</div>
+</div>
+
+<script>
+const Q=[
+["اختيار من متعدد","ما الرقم الذي يمثله الحرف A في نظام العد الستة عشري؟",["10","11","12","13"]],
+["اختيار من متعدد","ما الرقم الذي يمثله الحرف B في نظام العد الستة عشري؟",["11","10","12","13"]],
+["اختيار من متعدد","ما البوابة المنطقية التي تستقبل قيمة واحدة كمدخل وتقوم بعكسها؟",["بوابة النفي المنطقي NOT","بوابة الجمع المنطقي OR","بوابة الضرب المنطقي AND","بوابة الاختيار المقصور XOR"]],
+["اختيار من متعدد","العالم الذي وضع معمارية جهاز الحاسب الرئيسة التي تعتمد عليها الأجهزة الحديثة هو:",["جون فون نيومان","آلان تورنج","بيل جيتس","ستيف جوبز"]],
+["اختيار من متعدد","أي أنواع الذاكرة لا يمكن محو البيانات داخلها، وتُستخدم لتخزين تعليمات بدء التشغيل؟",["ذاكرة القراءة فقط (ROM)","المُسجلات (Registers)","القرص الصلب (HDD)","ذاكرة الوصول العشوائي (RAM)"]],
+["اختيار من متعدد","ما الجهاز الذي يقرأ وجهة الحزمة ويقرر المسار المناسب لها لتصل إلى وجهتها؟",["الموجه (Router)","الموزع (Hub)","جدار الحماية (Firewall)","الخادم (Server)"]],
+["اختيار من متعدد","أي بروتوكول يُعتبر أسرع ولكنه أقل موثوقية؟",["UDP","TCP","IP","HTTP"]],
+["اختيار من متعدد","أي بروتوكول يُعتبر أبطأ ولكنه أكثر موثوقية؟",["TCP","UDP","HTTP","IP"]],
+["اختيار من متعدد","كم عدد الطبقات التي يتكون منها نموذج الاتصال المفتوح OSI؟",["٧ طبقات","٥ طبقات","٤ طبقات","٦ طبقات"]],
+["اختيار من متعدد","ما البروتوكول المسؤول عن إدارة (نقل) الملفات؟",["FTP","DNS","SMTP","URL"]],
+["اختيار من متعدد","ما البروتوكول المسؤول عن نقل البريد الإلكتروني؟",["SMTP","DNS","FTP","URL"]],
+["اختيار من متعدد","برنامج يقوم بحماية الحاسب من أي نشاط مشبوه غير آمن:",["جدار الحماية","تطبيقات ترفيهية","نظام التشغيل","الذاكرة الرئيسية"]],
+["صح أم خطأ","يستخدم نظام العد الثنائي رقمين فقط في كتابة الأعداد هما 0 و 1.",["✔ صح","✘ خطأ"]],
+["صح أم خطأ","نظام التشغيل هو نواة برامج نظام أجهزة الحاسب ويدير مصادر الجهاز مثل الذاكرة ووحدات الإدخال والإخراج.",["✔ صح","✘ خطأ"]],
+["صح أم خطأ","مصطلحا الإنترنت والشبكة العنكبوتية لهما نفس المعنى تمامًا ويشيران للشيء نفسه.",["✘ خطأ","✔ صح"]],
+["صح أم خطأ","يعتبر كبار السن الفئة الأكثر تفاعلًا وسهولة في تعلم التقنيات الجديدة مقارنة بالأجيال الشابة.",["✘ خطأ","✔ صح"]],
+["صح أم خطأ","يمكن للموظفين العمل عن بعد دون الحاجة للذهاب إلى أماكن عملهم، مما يوفر الوقت والموارد.",["✔ صح","✘ خطأ"]],
+["صح أم خطأ","يتيح التخزين السحابي الاحتفاظ بنسخ احتياطية من الملفات والوصول إليها من أي مكان بمجرد الاتصال بالإنترنت.",["✔ صح","✘ خطأ"]],
+["صح أم خطأ","يقوم المعالج (عقل الحاسب) بمعالجة عدة مهام في وقت واحد.",["✔ صح","✘ خطأ"]],
+["اختيار من متعدد","ما الطبقة المسؤولة عن التشفير وفك التشفير في نموذج OSI؟",["طبقة التقديم","طبقة النقل","طبقة الشبكة","الطبقة المادية"]],
+["اختيار من متعدد","ما الطبقة المسؤولة عن نقل البيانات بشكل سليم؟",["طبقة النقل","طبقة التقديم","طبقة الجلسة","الطبقة المادية"]],
+["اختيار من متعدد","ما الطبقة المسؤولة عن تحديد مسار الحزم (التوجيه) في نموذج OSI؟",["طبقة الشبكة","طبقة التطبيقات","طبقة التقديم","الطبقة المادية"]],
+["اختيار من متعدد","ما الطبقة المسؤولة عن نقل الإشارات عبر الكابلات والأجهزة؟",["الطبقة المادية","طبقة النقل","طبقة التقديم","طبقة الجلسة"]],
+["اختيار من متعدد","حرف F في النظام العشري يقابله الرقم:",["15","16","14","13"]],
+["صح أم خطأ","يقوم الكمبيوتر بإرسال الرسالة ككل كاملة دون تجزئتها.",["✘ خطأ","✔ صح"]],
+["صح أم خطأ","أكبر قيمة موجودة في النظام الستة عشري هي 16.",["✘ خطأ","✔ صح"]],
+["صح أم خطأ","يعتبر العدد 6572 عددًا ثنائيًا.",["✘ خطأ","✔ صح"]],
+["صح أم خطأ","من الممكن أن يتشارك جهازان في عنوان IP نفسه.",["✘ خطأ","✔ صح"]],
+["المزاوجة","النظام الثنائي هو:",["نظام عد أساسه 2 يستخدم الرقمين 0 و 1 فقط","نظام عد أساسه 10 يستخدم الأرقام من 0 إلى 9","نظام عد أساسه 16 ويستخدم الرموز 0-9 و A-F","منصة تخزين سحابية"]],
+["المزاوجة","النظام العشري هو:",["نظام عد أساسه 10 يستخدم الأرقام من 0 إلى 9","نظام عد أساسه 2 يستخدم الرقمين 0 و 1 فقط","نظام ترميز يستخدم لتمثيل النصوص","نظام يستخدم لتمثيل الألوان"]],
+["المزاوجة","ASCII هو:",["نظام ترميز يستخدم لتمثيل النصوص","نظام يستخدم لتمثيل الألوان","منصة تخزين سحابية","نظام عد أساسه 16"]],
+["المزاوجة","النظام الستة عشري هو:",["نظام عد أساسه 16 ويستخدم الرموز 0-9 و A-F","نظام عد أساسه 2","نظام ترميز للنصوص","نظام عد أساسه 10"]],
+["المزاوجة","OneDrive / Google Drive هو:",["منصة تخزين سحابية","نظام يستخدم لتمثيل الألوان","نظام عد أساسه 16","نظام ترميز للنصوص"]],
+["المزاوجة","RGB هو:",["نظام يستخدم لتمثيل الألوان (أحمر، أخضر، أزرق)","منصة تخزين سحابية","نظام ترميز للنصوص","نظام عد أساسه 2"]],
+["أعطي مثالًا","أي مما يلي مثال على وحدة إدخال؟",["لوحة المفاتيح","الطابعة","الشاشة","السماعات"]],
+["أعطي مثالًا","أي مما يلي مثال على وحدة إخراج؟",["الطابعة","لوحة المفاتيح","الفأرة","الماسح الضوئي"]],
+["أعطي مثالًا","أي مما يلي مثال على نظام تشغيل؟",["Windows","Microsoft Word","Google Chrome","Excel"]],
+["أعطي مثالًا","أي مما يلي مثال على برنامج تطبيقي؟",["Microsoft Word","Android","Windows","Linux"]],
+["أعطي مثالًا","وظيفة تأثرت إيجابًا بالتقنية:",["مطوّرة تطبيقات","كاتب على الآلة الكاتبة","مشغّل مصعد يدوي","موزّع بريد ورقي"]],
+["أعطي مثالًا","وظيفة تأثرت سلبًا بالتقنية:",["كاتب على الآلة الكاتبة","محللة بيانات","مصممة مواقع","مهندسة شبكات"]]
+];
+const $=id=>document.getElementById(id);
+let ctx,i,score,lock;
+function tone(f,t,d,type,v,slide){const o=ctx.createOscillator(),g=ctx.createGain();o.type=type;o.frequency.setValueAtTime(f,ctx.currentTime+t);
+if(slide)o.frequency.linearRampToValueAtTime(slide,ctx.currentTime+t+d);
+g.gain.setValueAtTime(v,ctx.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+t+d);
+o.connect(g).connect(ctx.destination);o.start(ctx.currentTime+t);o.stop(ctx.currentTime+t+d)}
+function snd(k){try{if(!ctx)ctx=new (window.AudioContext||window.webkitAudioContext)();ctx.resume();
+if(k=="ok"){[659,880,1175].forEach((f,n)=>tone(f,n*.09,.18,"square",.12))}
+else if(k=="no"){tone(220,0,.3,"sawtooth",.2,90);tone(110,.12,.3,"square",.15,60)}
+else if(k=="win"){[523,659,784,1047,784,1047].forEach((f,n)=>tone(f,n*.13,.22,"square",.12))}
+else if(k=="lose"){[392,330,262,196].forEach((f,n)=>tone(f,n*.2,.3,"sawtooth",.15))}}catch(e){}}
+function shuf(a){a=a.slice();for(let n=a.length-1;n>0;n--){const j=Math.random()*(n+1)|0;[a[n],a[j]]=[a[j],a[n]]}return a}
+function show(id){["start","game","end"].forEach(x=>$(x).classList.toggle("hide",x!=id))}
+function start(){i=0;score=0;$("sc").textContent=0;show("game");render()}
+function render(){lock=false;const [s,q,o]=Q[i];$("sec").textContent="📖 "+s;$("q").textContent=q;$("fb").textContent="";$("next").classList.add("hide");
+$("cnt").textContent="سؤال "+(i+1)+" / "+Q.length;$("bar").style.width=(i/Q.length*100)+"%";
+const box=$("opts");box.innerHTML="";const list=s=="صح أم خطأ"?(Math.random()<.5?o:o.slice().reverse()):shuf(o);
+list.forEach(t=>{const b=document.createElement("button");b.className="opt";b.textContent=t;b.onclick=()=>pick(b,t===o[0]);box.appendChild(b)})}
+function pick(b,right){if(lock)return;lock=true;
+[...$("opts").children].forEach(x=>{x.disabled=true;if(x.textContent===Q[i][2][0])x.classList.add("ok")});
+if(right){score+=10;$("sc").textContent=score;snd("ok");$("fb").textContent="🎉 أحسنتِ! +١٠ نقاط";$("card").classList.add("pop")}
+else{b.classList.add("no");snd("no");$("fb").textContent="💥 إجابة خاطئة! الصحيحة باللون الأخضر";$("card").classList.add("shake")}
+setTimeout(()=>$("card").classList.remove("pop","shake"),400);
+$("next").textContent=i==Q.length-1?"النتيجة 🏆":"التالي ➡️";$("next").classList.remove("hide")}
+function finish(){show("end");const max=Q.length*10,p=score/max,ok=p>=.6;$("bar").style.width="100%";
+$("ei").textContent=ok?"🏆":"💀";$("et").textContent=ok?"أحسنتِ! أنهيتِ المغامرة":"انتهت اللعبة";$("es").textContent=score+" / "+max+" 💎";
+const m=$("em");m.className="msg "+(ok?"good":"bad");
+m.textContent=ok?"🌟 أداء رائع! أنتِ مستعدة للاختبار بإذن الله.":"📚 يجب عليكِ مراجعة الدروس مرة أخرى ثم إعادة المحاولة. أنتِ قادرة على ذلك!";
+snd(ok?"win":"lose")}
+$("go").onclick=()=>{snd("ok");start()};
+$("next").onclick=()=>{i++;i<Q.length?render():finish()};
+$("again").onclick=start;
+</script>
+</body>
+</html>
